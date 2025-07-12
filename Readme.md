@@ -536,4 +536,247 @@ Now each goroutine captures its own copy of `val`.
 
 ---
 
+### ✅ What Is Recursion in Go?
+
+**Recursion** is a programming concept where a function calls itself to solve a smaller part of a problem until it reaches a base condition.
+
+In Go, recursion works the same way as in most other languages. Functions can call themselves with modified arguments until a termination condition is met.
+
+---
+
+### ✅ Why Use Recursion?
+
+* To solve problems that can be broken down into similar subproblems.
+* Common use cases:
+
+  * Factorial calculation
+  * Fibonacci series
+  * Tree traversal
+  * File system navigation
+  * Algorithmic problems (divide and conquer, etc.)
+
+---
+
+### ✅ Basic Structure of a Recursive Function
+
+A recursive function in Go has two main parts:
+
+1. **Base Case** (Exit condition):
+   Where the function stops calling itself.
+
+2. **Recursive Case**:
+   Where the function continues calling itself.
+
+---
+
+### ✅ Example 1: Factorial Using Recursion
+
+```go
+package main
+
+import "fmt"
+
+func factorial(n int) int {
+    if n == 0 {
+        return 1 // Base case
+    }
+    return n * factorial(n-1) // Recursive case
+}
+
+func main() {
+    result := factorial(5)
+    fmt.Println(result) // Output: 120
+}
+```
+
+#### Explanation:
+
+* `factorial(5)` → `5 * factorial(4)` → `5 * 4 * 3 * 2 * 1 * 1` → `120`
+* Stops when `n == 0`.
+
+---
+
+### ✅ Example 2: Fibonacci Series Using Recursion
+
+```go
+package main
+
+import "fmt"
+
+func fibonacci(n int) int {
+    if n <= 1 {
+        return n
+    }
+    return fibonacci(n-1) + fibonacci(n-2)
+}
+
+func main() {
+    fmt.Println(fibonacci(5)) // Output: 5
+}
+```
+
+#### Note:
+
+* Recursive Fibonacci is not efficient for large `n` because it recomputes values.
+
+---
+
+### ✅ Important Considerations for Recursion in Go:
+
+| Aspect         | Note                                                                                                        |
+| -------------- | ----------------------------------------------------------------------------------------------------------- |
+| Base Case      | Always necessary to avoid infinite recursion.                                                               |
+| Stack Usage    | Go functions use stack memory. Too many recursive calls can lead to stack overflow.                         |
+| Tail Recursion | Go doesn’t have tail call optimization (TCO) like some languages. Use loops where possible for performance. |
+| Alternatives   | Prefer iteration over recursion in performance-critical scenarios.                                          |
+
+---
+
+### ✅ Example 3: Recursive Directory Traversal (Concept)
+
+```go
+func traverseDirectory(path string) {
+    files, _ := os.ReadDir(path)
+
+    for _, file := range files {
+        fmt.Println(file.Name())
+        if file.IsDir() {
+            traverseDirectory(filepath.Join(path, file.Name()))
+        }
+    }
+}
+```
+
+* This recursively walks through folders.
+
+---
+
+### ✅ Recursion vs. Looping in Go:
+
+| Recursion                       | Looping                                     |
+| ------------------------------- | ------------------------------------------- |
+| Function calls itself           | Repeats a block of code                     |
+| Simpler for problems like trees | More efficient in Go for simple repetitions |
+| Uses stack memory               | Uses constant memory                        |
+| No tail call optimization       | Does not rely on stack depth                |
+
+---
+
+### ✅ What Are Variadic Functions in Go?
+
+**Variadic functions** in Go are functions that accept a variable number of arguments of the same type.
+Instead of requiring a fixed number of parameters, we can pass as many as needed.
+
+---
+
+### ✅ Why Use Variadic Functions?
+
+* When the number of arguments isn’t known in advance.
+* Useful for functions like `fmt.Println()`, `strings.Join()`, mathematical calculations like sum or max.
+
+---
+
+### ✅ Basic Syntax of a Variadic Function:
+
+```go
+func functionName(param ...type) {
+    // Function body
+}
+```
+
+* `param` becomes a slice inside the function.
+* `...type` indicates we can pass zero or more arguments of that type.
+
+---
+
+### ✅ Simple Example: Sum Function
+
+```go
+package main
+
+import "fmt"
+
+func sum(numbers ...int) int {
+    total := 0
+    for _, num := range numbers {
+        total += num
+    }
+    return total
+}
+
+func main() {
+    fmt.Println(sum(1, 2, 3))        // Output: 6
+    fmt.Println(sum(5, 10, 15, 20))  // Output: 50
+    fmt.Println(sum())               // Output: 0
+}
+```
+
+---
+
+### ✅ How It Works Internally:
+
+* `numbers ...int` → becomes a `[]int` slice inside the function.
+* If no arguments are passed, it's equivalent to passing an empty slice.
+
+---
+
+### ✅ Combining Fixed and Variadic Parameters:
+
+We can mix fixed parameters with variadic ones, but **the variadic parameter must always be last.**
+
+Example:
+
+```go
+func printMessage(prefix string, words ...string) {
+    fmt.Print(prefix + ": ")
+    for _, word := range words {
+        fmt.Print(word + " ")
+    }
+    fmt.Println()
+}
+
+func main() {
+    printMessage("Info", "Hello", "World")
+    printMessage("Warning")
+}
+```
+
+---
+
+### ✅ Passing a Slice to a Variadic Function:
+
+If we already have a slice, we can pass it like this:
+
+```go
+nums := []int{1, 2, 3, 4}
+fmt.Println(sum(nums...)) // Spread the slice
+```
+
+* We **must** use `...` after the slice to unpack it.
+
+---
+
+### ✅ Variadic Functions in the Standard Library
+
+Some familiar examples:
+
+* `fmt.Println(a ...interface{})`
+* `append(slice, elems ...T)`
+* `strings.Join(elements []string, sep string)`
+
+---
+
+### ✅ Important Notes:
+
+| Point                          | Explanation                                     |
+| ------------------------------ | ----------------------------------------------- |
+| Zero arguments allowed         | Variadic parameter can have zero elements.      |
+| Must be last in parameter list | Fixed parameters must come before.              |
+| Treated as a slice internally  | Gives flexibility with normal slice operations. |
+
+---
+
+
+
+
 

@@ -1,14 +1,10 @@
-package main
+package variadic
 
 import "fmt"
 
 func main(){
 	numbers:= []int{1,2,2,2}
 	fmt.Println(sumUp(numbers)) //7
-
-	// Splitting Slices into Parameter Values
-	anotherSum:= sumUpVariadic(numbers...)
-	fmt.Println(anotherSum)
 
 	// variadic fx - Variable no. of params.
 	fmt.Println(sumUpVariadic(1,2,3,4,5,6)) //21
