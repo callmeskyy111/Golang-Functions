@@ -2,7 +2,7 @@ Here’s a clear, structured READ on functions in GoLang, aimed at both beginner
 
 ---
 
-# Functions in GoLang — A Complete Guide
+# Functions in GoLang
 
 In Go (Golang), functions are first-class citizens. This means they can be assigned to variables, passed as arguments, and returned from other functions.
 
